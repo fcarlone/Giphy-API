@@ -1,5 +1,5 @@
 // Global variables
-let superheroes = ["batman", "thor", "captain america", "hulk"];
+let topics = ["batman", "thor", "captain america", "hulk"];
 // let apiKey = 'g5t8rzBmA7CyL8n5km5vhPjOEfUXops4';
 let queryLimit = 10;
 // let queryURL = `https://api.giphy.com/v1/gifs/search?api_key=g5t8rzBmA7CyL8n5km5vhPjOEfUXops4&q=${searchTerm}&limit=${queryLimit}&offset=0&lang=en`;
@@ -7,20 +7,20 @@ let queryLimit = 10;
 // jQuery
 $(document).ready(function () {
 
-  // Create buttons for superheroes in 'superhereoes' array
+  // Create buttons for superheroes in 'topics' array
   const createButtons = () => {
     // Delete previous buttons before adding new superhero button
     $("#buttons-view").empty();
-    // for-loop through array of superheroes
-    for (let i = 0; i < superheroes.length; i++) {
+    // for-loop through array of superheroes/topics
+    for (let i = 0; i < topics.length; i++) {
       // Create button tag
       let buttonTag = $("<button>");
       // Add a class
       buttonTag.addClass("superhero")
       // Add a data-attribute
-      buttonTag.attr("data-superhero", superheroes[i]);
+      buttonTag.attr("data-superhero", topics[i]);
       // Add button text
-      buttonTag.text(superheroes[i]);
+      buttonTag.text(topics[i]);
       // Add button to HTML file.
       $("#buttons-view").append(buttonTag);
     };
@@ -81,7 +81,7 @@ $(document).ready(function () {
     let superhero = $("#superhero-input").val().trim();
     console.log('on-Click event', superhero);
     // Add superhero to superheros array
-    superheroes.push(superhero);
+    topics.push(superhero);
     // Invoke createButtons method to create new superhero button
     createButtons();
   });
@@ -92,6 +92,8 @@ $(document).ready(function () {
   $(document).on("click", ".superhero", function () {
     // Clear previous image data
     $(".response-image").empty();
+    // Reset limit to 10
+    queryLimit = 10;
     searchTerm = $(this).attr("data-superhero");
     // Build URL
     let queryURL = `https://api.giphy.com/v1/gifs/search?api_key=g5t8rzBmA7CyL8n5km5vhPjOEfUXops4&q=${searchTerm}&limit=${queryLimit}&offset=0&lang=en`;
@@ -99,7 +101,7 @@ $(document).ready(function () {
     ajaxCall(queryURL);
   });
 
-  // // On-click event when gif image is clicked (store in state variable)
+  // On-click event when gif image is clicked (store in state variable)
   $(document).on("click", ".gif", function () {
     let state = $(this).attr("data-state");
     console.log('state', state)
@@ -113,6 +115,17 @@ $(document).ready(function () {
       $(this).attr("src", still);
       $(this).attr("data-state", "still")
     }
+  });
+
+  // on-click event - add more gifs
+  $(document).on("click", "#add-gifs", function () {
+    queryLimit += 10;
+    console.log("add gifs button", queryLimit);
+    // Empty 'response-image' div - replace with new limit
+    $(".response-image").empty();
+    // Build URL and make ajax call;
+    let queryURL = `https://api.giphy.com/v1/gifs/search?api_key=g5t8rzBmA7CyL8n5km5vhPjOEfUXops4&q=${searchTerm}&limit=${queryLimit}&offset=0&lang=en`;
+    ajaxCall(queryURL);
   });
 
   // Invoke createButtons function
