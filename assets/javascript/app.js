@@ -39,14 +39,14 @@ $(document).ready(function () {
         // rating
         let responseRating = response.data[i].rating;
         console.log('Rating: ', responseRating);
-        // image src
-        let responseImage = response.data[i].images.original_still.url;
+        // image src *** GET Fixed Height URL
+        let responseImage = response.data[i].images.fixed_height_still.url;
         console.log('Original Image', responseImage);
         // data-still src
-        let responseStill = response.data[i].images.original_still.url;
+        let responseStill = response.data[i].images.fixed_height_still.url;
         console.log('Still Image', responseStill);
         // data-animate src
-        let responseAnimate = response.data[i].images.original.url;
+        let responseAnimate = response.data[i].images.fixed_height.url;
         console.log('Animate', responseAnimate);
 
         // Create image tag
@@ -86,9 +86,6 @@ $(document).ready(function () {
     createButtons();
   });
 
-  // On-click event when gif image is clicked (store in state variable)
-
-
   // On-click event for selected superhero button -- add to document to handle newly created buttons
   // Class name superhero
   // Function name handleSuperheroButton
@@ -102,6 +99,21 @@ $(document).ready(function () {
     ajaxCall(queryURL);
   });
 
+  // // On-click event when gif image is clicked (store in state variable)
+  $(document).on("click", ".gif", function () {
+    let state = $(this).attr("data-state");
+    console.log('state', state)
+    if (state === "still") {
+      let animate = $(this).attr("data-animate");
+      $(this).attr("src", animate);
+      $(this).attr("data-state", "animate");
+    };
+    if (state === "animate") {
+      let still = $(this).attr("data-still");
+      $(this).attr("src", still);
+      $(this).attr("data-state", "still")
+    }
+  });
 
   // Invoke createButtons function
   createButtons();
