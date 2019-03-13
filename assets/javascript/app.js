@@ -37,7 +37,23 @@ $(document).ready(function () {
     }).then(function (response) {
       console.log(response)
     });
-  }
+  };
+
+  // On-click event to handle when a superhero is entered and Submit button is clicked
+  $("#add-superhero").on("click", function (event) {
+    event.preventDefault();
+
+    // Get the input value submitted from input form
+    let superhero = $("#superhero-input").val().trim();
+    console.log('on-Click event', superhero);
+
+    // Add superhero to superheros array
+    superheroes.push(superhero);
+
+    // Invoke createButtons method to create new superhero button
+    createButtons();
+  });
+
   // On-click event for selected superhero button -- add to document to handle newly created buttons
   // Class name superhero
   // Function name handleSuperheroButton
