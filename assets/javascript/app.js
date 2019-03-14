@@ -61,9 +61,28 @@ $(document).ready(function () {
         imageTag.attr("data-state", "still");
         // add class "gif"
         imageTag.addClass("gif");
+        // add bootstrap class
+        imageTag.addClass("card-img-top");
 
-        // Append to "response-image" class
-        $(".response-image").append(imageTag)
+        // Create bootstrap cards
+        let card = $("<div>");
+        card.addClass("card");
+
+        let cardBody = $("<div>");
+        cardBody.addClass("card-body");
+
+        let cardText = $("<p>").text('test this section');
+        cardText.addClass("card-text")
+
+        let appendOne = $(cardBody).append(cardText);
+
+        $(card).append(imageTag);
+        $(card).append(appendOne);
+
+        $(".row").append(card);
+
+        // Append to "response-image" class **bootstrap
+        // $(".card").append(imageTag)
       };
 
       // for-loop through response
@@ -91,7 +110,7 @@ $(document).ready(function () {
   // Function name handleSuperheroButton
   $(document).on("click", ".superhero", function () {
     // Clear previous image data
-    $(".response-image").empty();
+    $(".row").empty();
     // Reset limit to 10
     queryLimit = 10;
     searchTerm = $(this).attr("data-superhero");
@@ -122,7 +141,7 @@ $(document).ready(function () {
     queryLimit += 10;
     console.log("add gifs button", queryLimit);
     // Empty 'response-image' div - replace with new limit
-    $(".response-image").empty();
+    $(".row").empty();
     // Build URL and make ajax call;
     let queryURL = `https://api.giphy.com/v1/gifs/search?api_key=g5t8rzBmA7CyL8n5km5vhPjOEfUXops4&q=${searchTerm}&limit=${queryLimit}&offset=0&lang=en`;
     ajaxCall(queryURL);
