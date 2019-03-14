@@ -38,16 +38,19 @@ $(document).ready(function () {
       function parseResponse(i) {
         // rating
         let responseRating = response.data[i].rating;
-        console.log('Rating: ', responseRating);
-        // image src *** GET Fixed Height URL
+        // gif title
+        let responseTitle = response.data[i].title;
+        // import date
+        let responseImportDate = response.data[i].import_datetime
+        let date = new Date(responseImportDate)
+        let options = { year: 'numeric', month: 'long', day: 'numeric' };
+        let convertedImportDate = (date.toLocaleDateString("en-US", options))
+        // image src
         let responseImage = response.data[i].images.fixed_height_still.url;
-        console.log('Original Image', responseImage);
         // data-still src
         let responseStill = response.data[i].images.fixed_height_still.url;
-        console.log('Still Image', responseStill);
         // data-animate src
         let responseAnimate = response.data[i].images.fixed_height.url;
-        console.log('Animate', responseAnimate);
 
         // Create image tag
         let imageTag = $("<img>")
@@ -71,18 +74,23 @@ $(document).ready(function () {
         let cardBody = $("<div>");
         cardBody.addClass("card-body");
 
-        let cardText = $("<p>").text('test this section');
+        let cardText = $("<p>").text(`Title: ${responseTitle}`);
         cardText.addClass("card-text")
+        let cardTextRating = $("<p>").text(`Rating: ${responseRating}`);
+        cardTextRating.addClass("card-text")
+        let cardImportDate = $("<p>").text(`Import Date: ${convertedImportDate}`);
+        cardImportDate.addClass("card-text")
 
         let appendOne = $(cardBody).append(cardText);
+        let appendTwo = $(cardBody).append(cardTextRating);
+        let appendThree = $(cardBody).append(cardImportDate);
 
         $(card).append(imageTag);
         $(card).append(appendOne);
+        $(card).append(appendTwo);
+        $(card).append(appendThree);
 
         $(".row").append(card);
-
-        // Append to "response-image" class **bootstrap
-        // $(".card").append(imageTag)
       };
 
       // for-loop through response
@@ -98,12 +106,35 @@ $(document).ready(function () {
     event.preventDefault();
     // Get the input value submitted from input form
     let superhero = $("#superhero-input").val().trim();
-    console.log('on-Click event', superhero);
-    // Add superhero to superheros array
-    topics.push(superhero);
-    // Invoke createButtons method to create new superhero button
-    createButtons();
+
+    // Validate input value
+    if (!superhero) {
+      $(".user-message").text(`Please enter a valid name.`)
+    }
+    else if (topics.includes(superhero)) {
+      $(".user-message").text(`A ${superhero} button already exists.`)
+    } else {
+      // Add superhero to superheros array
+      topics.push(superhero);
+      // Invoke createButtons method to create new superhero button
+      createButtons();
+    }
+    // Reset form value to blank
+    $("#superhero-input").val('');
   });
+
+  // const validateForm = () => {
+  //   let superheroInput = document.forms["superheroForm"]["superhero-input"].value
+  //   console.log('superhero', superheroInput, topics)
+  //   // Check input value against topics array 
+  //   if (topics.includes(superheroInput)) {
+  //     console.log('true')
+  //   } else {
+  //     console.log('false')
+  //   }
+  // }
+  // $(document).on("click", "#add-superhero", validateForm)
+
 
   // On-click event for selected superhero button -- add to document to handle newly created buttons
   // Class name superhero
@@ -123,7 +154,6 @@ $(document).ready(function () {
   // On-click event when gif image is clicked (store in state variable)
   $(document).on("click", ".gif", function () {
     let state = $(this).attr("data-state");
-    console.log('state', state)
     if (state === "still") {
       let animate = $(this).attr("data-animate");
       $(this).attr("src", animate);
@@ -148,6 +178,7 @@ $(document).ready(function () {
   });
 
   // Invoke createButtons function
+  // validateForm();
   createButtons();
 });
 
