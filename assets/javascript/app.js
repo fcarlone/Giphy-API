@@ -1,5 +1,6 @@
 // Global variables
 let topics = ["batman", "thor", "captain america", "hulk"];
+let superheroName = '';
 // let apiKey = 'g5t8rzBmA7CyL8n5km5vhPjOEfUXops4';
 let queryLimit = 10;
 // let queryURL = `https://api.giphy.com/v1/gifs/search?api_key=g5t8rzBmA7CyL8n5km5vhPjOEfUXops4&q=${searchTerm}&limit=${queryLimit}&offset=0&lang=en`;
@@ -97,16 +98,24 @@ $(document).ready(function () {
       for (let i = 0; i < queryLimit; i++) {
         parseResponse(i);
       };
+      // Add superhero name above gifs and button to display movies related to the superhero
+      let superheroTitle = $("<h2>").text(`Superhero: ${searchTerm}`)
+      superheroTitle.addClass("superhero-title")
+      $(".superhero-name").append(superheroTitle)
 
+      let superheroMovieButton = $("<button>")
+      $(superheroMovieButton).text(`see movies related to ${searchTerm}`)
+
+      $(".superhero-movie-button").append(superheroMovieButton);
     });
   };
 
   // On-click event to handle when a superhero is entered and Submit button is clicked
   $("#add-superhero").on("click", function (event) {
     event.preventDefault();
+
     // Get the input value submitted from input form
     let superhero = $("#superhero-input").val().trim();
-
     // Validate input value
     if (!superhero) {
       $(".user-message").text(`Please enter a valid name.`)
@@ -141,6 +150,8 @@ $(document).ready(function () {
   // Function name handleSuperheroButton
   $(document).on("click", ".superhero", function () {
     // Clear previous image data
+    $(".superhero-name").empty();
+    $(".superhero-movie-button").empty();
     $(".row").empty();
     // Reset limit to 10
     queryLimit = 10;
@@ -169,6 +180,9 @@ $(document).ready(function () {
   // on-click event - add more gifs
   $(document).on("click", "#add-gifs", function () {
     queryLimit += 10;
+    // Clear previous image data
+    $(".superhero-name").empty();
+    $(".superhero-movie-button").empty();
     console.log("add gifs button", queryLimit);
     // Empty 'response-image' div - replace with new limit
     $(".row").empty();
