@@ -3,3 +3,8 @@
 .card {
   width: 18rem;
 }
+
+#movie-container img {
+  width: 250px;
+  height: 375px;
+}

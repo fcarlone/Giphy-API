@@ -4,7 +4,7 @@ let superheroName = '';
 // let apiKey = 'g5t8rzBmA7CyL8n5km5vhPjOEfUXops4';
 let queryLimit = 10;
 // let queryURL = `https://api.giphy.com/v1/gifs/search?api_key=g5t8rzBmA7CyL8n5km5vhPjOEfUXops4&q=${searchTerm}&limit=${queryLimit}&offset=0&lang=en`;
-
+// let themoviedb example = http://api.themoviedb.org/3/search/movie?api_key=bbaefc5cfba8d768b17fb5ce96e4a7f2&query=thor;
 // jQuery
 $(document).ready(function () {
 
@@ -110,6 +110,57 @@ $(document).ready(function () {
     });
   };
 
+  // ajax call - get movie information based on superhero name
+  const ajaxMovieRequest = (superhero) => {
+    let movieQueryURL = `http://api.themoviedb.org/3/search/movie?api_key=bbaefc5cfba8d768b17fb5ce96e4a7f2&query=${superhero}`;
+    console.log('the ajaxMovieRequest function', superhero)
+    $.ajax({
+      url: movieQueryURL,
+      method: "GET"
+    }).then(function (response) {
+      console.log('movie response', response)
+
+      // Get movie data
+      function movieResults(i) {
+        let movieTitle = response.results[i].title;
+        // let movieRating = response.results[i].rating;
+        let movieOverview = response.results[i].overview;
+        let movieReleaseDate = response.results[i].release_date;
+        let date = new Date(movieReleaseDate)
+        let options = { year: 'numeric', month: 'long', day: 'numeric' };
+        let convertedMovieDate = (date.toLocaleDateString("en-US", options))
+        let moviePosterPath = `https://image.tmdb.org/t/p/original${response.results[i].poster_path}`;
+
+        console.log('movieTitle', movieTitle)
+        // console.log('movieRating', movieRating)
+        console.log('movieRelease', convertedMovieDate)
+        console.log('movieOverview', movieOverview)
+        console.log('moviePoster', moviePosterPath);
+
+        // Display 5 movies 
+        let movieDiv = $("<div>").addClass("movie")
+
+        let movieTitleTag = $("<p>").text(movieTitle);
+        let movieOverviewTag = $("<p>").text(movieOverview);
+        let movieReleaseDateTag = $("<p>").text(convertedMovieDate);
+        let moviePosterTag = $("<img>").attr("src", moviePosterPath);
+
+
+        $(movieDiv).append(movieTitleTag);
+        $(movieDiv).append(movieOverviewTag);
+        $(movieDiv).append(movieReleaseDateTag);
+        $(movieDiv).append(moviePosterTag);
+
+        $(".movies").append(movieDiv);
+
+      }
+
+      for (let i = 0; i <= 4; i++) {
+        movieResults(i);
+      }
+    });
+  }
+
   // On-click event to handle when a superhero is entered and Submit button is clicked
   $("#add-superhero").on("click", function (event) {
     event.preventDefault();
@@ -179,6 +230,7 @@ $(document).ready(function () {
 
   // on-click event - add more gifs
   $(document).on("click", "#add-gifs", function () {
+    event.preventDefault();
     queryLimit += 10;
     // Clear previous image data
     $(".superhero-name").empty();
@@ -190,6 +242,13 @@ $(document).ready(function () {
     let queryURL = `https://api.giphy.com/v1/gifs/search?api_key=g5t8rzBmA7CyL8n5km5vhPjOEfUXops4&q=${searchTerm}&limit=${queryLimit}&offset=0&lang=en`;
     ajaxCall(queryURL);
   });
+
+  // on-click event - invoke the ajaxMovieRequest function
+  $(".superhero-movie-button").on("click", function () {
+    console.log(".superhero-movie-button button clicked", searchTerm)
+    // Invoke ajaxMovieRequest function
+    ajaxMovieRequest(searchTerm);
+  })
 
   // Invoke createButtons function
   // validateForm();
