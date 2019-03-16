@@ -9,8 +9,9 @@ let queryLimit = 10;
 $(document).ready(function () {
 
   // Setup Giphy site
-  $(".user-message").text("Select or add a superhero")
-  $("#add-gifs").hide()
+  $(".user-message").text("Select or add a superhero");
+  $("#add-gifs").hide();
+  $("#clear-all").hide();
 
   // Create buttons for superheroes in 'topics' array
   const createButtons = () => {
@@ -171,6 +172,7 @@ $(document).ready(function () {
   // On-click event to handle when a superhero is entered and Submit button is clicked
   $("#add-superhero").on("click", function (event) {
     event.preventDefault();
+    $(".user-message").text("You successfully added a new superhero button")
     // Get the input value submitted from input form
     let superhero = $("#superhero-input").val().trim().toLowerCase();
     // Validate input value
@@ -190,8 +192,14 @@ $(document).ready(function () {
 
   // On-click event for selected superhero button -- add to document to handle newly created buttons
   // Class name superhero
-  // Function name handleSuperheroButton
   $(document).on("click", ".superhero", function () {
+    $(".user-message").text("Select from the buttons below or select another superhero")
+    // Show superhero-container
+    $(".superhero-container").show();
+    // Show response-container
+    $(".response-container").show();
+    // Show clear all button
+    $("#clear-all").show();
     // Clear previous movie data
     $(".movies").empty();
     // Clear previous image data
@@ -235,6 +243,15 @@ $(document).ready(function () {
     // Build URL and make ajax call;
     let queryURL = `https://api.giphy.com/v1/gifs/search?api_key=g5t8rzBmA7CyL8n5km5vhPjOEfUXops4&q=${searchTerm}&limit=${queryLimit}&offset=0&lang=en`;
     ajaxCall(queryURL);
+  });
+
+  // on-click event - clear all gifs and movie detail
+  $("#clear-all").on("click", function () {
+    // hide response-container
+    $(".response-container").hide();
+    // hide superhero-container
+    $(".superhero-container").hide();
+    $(".user-message").text("Data is cleared")
   });
 
   // on-click event - invoke the ajaxMovieRequest function
