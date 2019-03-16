@@ -1,7 +1,112 @@
 /* Bootstrap */
 
+/* https://www.toptal.com/designers/subtlepatterns/ */
+
+.app-content {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.header-container {
+  text-align: center;
+}
+
+.jumbotron {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.user-container,
+.superhero-container,
+.response-container {
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.user-message {
+  font-size: 2rem;
+}
+
+#superhero-form {
+  margin-bottom: 15px;
+}
+
+.superhero-input-label {
+  font-size: 1.5rem;
+}
+
+#superhero-input {
+  font-size: 1.25rem;
+  width: 20rem;
+}
+
+#add-superhero,
+#add-gifs,
+.add-movie {
+  border-radius: 4px;
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+}
+
+#buttons-view {
+  margin-bottom: 10px;
+}
+
+.superhero {
+  border-radius: 4px;
+  margin-left: 5px;
+  font-size: 1.25rem;
+}
+
+#add-superhero:focus,
+#add-gifs:focus,
+.add-movie:focus,
+#superhero-input {
+  outline: none;
+}
+
+.superhero:focus {
+  background: red;
+  outline: none;
+}
+
+.response-container {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.add-movie {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.row {
+  /* center cards */
+  display: inline;
+  margin: 0;
+}
+
 .card {
   width: 18rem;
+  margin: 5px;
+}
+
+.card-text {
+  margin-bottom: 7px;
+}
+
+#movie-container {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.movie {
+  border: 2px solid lightgrey;
+  padding: 15px;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 #movie-container img {

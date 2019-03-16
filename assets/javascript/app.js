@@ -8,6 +8,10 @@ let queryLimit = 10;
 // jQuery
 $(document).ready(function () {
 
+  // Setup Giphy site
+  $(".user-message").text("Select or add a superhero")
+  $("#add-gifs").hide()
+
   // Create buttons for superheroes in 'topics' array
   const createButtons = () => {
     // Delete previous buttons before adding new superhero button
@@ -75,11 +79,11 @@ $(document).ready(function () {
         let cardBody = $("<div>");
         cardBody.addClass("card-body");
 
-        let cardText = $("<p>").text(`Title: ${responseTitle}`);
+        let cardText = $("<p>").html(`<strong>Title:</strong> ${responseTitle}`);
         cardText.addClass("card-text")
-        let cardTextRating = $("<p>").text(`Rating: ${responseRating}`);
+        let cardTextRating = $("<p>").html(`<strong>Rating:</strong> ${responseRating}`);
         cardTextRating.addClass("card-text")
-        let cardImportDate = $("<p>").text(`Import Date: ${convertedImportDate}`);
+        let cardImportDate = $("<p>").html(`<strong>Import Date:</strong> ${convertedImportDate}`);
         cardImportDate.addClass("card-text")
 
         let appendOne = $(cardBody).append(cardText);
@@ -92,6 +96,9 @@ $(document).ready(function () {
         $(card).append(appendThree);
 
         $(".row").append(card);
+
+        // Show add more gifs button
+        $("#add-gifs").show();
       };
 
       // for-loop through response
@@ -103,8 +110,9 @@ $(document).ready(function () {
       superheroTitle.addClass("superhero-title")
       $(".superhero-name").append(superheroTitle)
 
-      let superheroMovieButton = $("<button>")
-      $(superheroMovieButton).text(`see movies related to ${searchTerm}`)
+      let superheroMovieButton = $("<button>");
+      superheroMovieButton.addClass("add-movie");
+      $(superheroMovieButton).text(`See movies related to ${searchTerm}`)
 
       $(".superhero-movie-button").append(superheroMovieButton);
     });
@@ -140,9 +148,9 @@ $(document).ready(function () {
         // Display 5 movies 
         let movieDiv = $("<div>").addClass("movie")
 
-        let movieTitleTag = $("<p>").text(movieTitle);
-        let movieOverviewTag = $("<p>").text(movieOverview);
-        let movieReleaseDateTag = $("<p>").text(convertedMovieDate);
+        let movieTitleTag = $("<p>").html(`<strong>Movie Title: </strong>${movieTitle}`);
+        let movieOverviewTag = $("<p>").html(`<strong>Plot: </strong>${movieOverview}`);
+        let movieReleaseDateTag = $("<p>").html(`<strong>Release Date: </strong>${convertedMovieDate}`);
         let moviePosterTag = $("<img>").attr("src", moviePosterPath);
 
 
@@ -154,7 +162,6 @@ $(document).ready(function () {
         $(".movies").append(movieDiv);
 
       }
-
       for (let i = 0; i <= 4; i++) {
         movieResults(i);
       }
@@ -164,15 +171,13 @@ $(document).ready(function () {
   // On-click event to handle when a superhero is entered and Submit button is clicked
   $("#add-superhero").on("click", function (event) {
     event.preventDefault();
-
     // Get the input value submitted from input form
-    let superhero = $("#superhero-input").val().trim();
+    let superhero = $("#superhero-input").val().trim().toLowerCase();
     // Validate input value
     if (!superhero) {
-      $(".user-message").text(`Please enter a valid name.`)
-    }
-    else if (topics.includes(superhero)) {
-      $(".user-message").text(`A ${superhero} button already exists.`)
+      $(".user-message").text(`Please enter a valid name`)
+    } else if (topics.includes(superhero)) {
+      $(".user-message").text(`A ${superhero} button already exists`)
     } else {
       // Add superhero to superheros array
       topics.push(superhero);
@@ -183,23 +188,12 @@ $(document).ready(function () {
     $("#superhero-input").val('');
   });
 
-  // const validateForm = () => {
-  //   let superheroInput = document.forms["superheroForm"]["superhero-input"].value
-  //   console.log('superhero', superheroInput, topics)
-  //   // Check input value against topics array 
-  //   if (topics.includes(superheroInput)) {
-  //     console.log('true')
-  //   } else {
-  //     console.log('false')
-  //   }
-  // }
-  // $(document).on("click", "#add-superhero", validateForm)
-
-
   // On-click event for selected superhero button -- add to document to handle newly created buttons
   // Class name superhero
   // Function name handleSuperheroButton
   $(document).on("click", ".superhero", function () {
+    // Clear previous movie data
+    $(".movies").empty();
     // Clear previous image data
     $(".superhero-name").empty();
     $(".superhero-movie-button").empty();

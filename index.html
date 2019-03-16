@@ -14,34 +14,41 @@
 </head>
 
 <body>
-  <h1>Giphy API</h1>
-
   <div class="app-content">
 
     <!-- Header -->
-    <div class="header-container">
-      <div class="header-title">Superheroes gifs</div>
-      <div class="header-description">Superheroes description placeholder</div>
-      <div class="user-message"></div>
+    <div class="header-container jumbotron">
+      <div class="header-title display-4">Superheroes gifs and Movie Data</div>
+      <div class="header-description lead">See all the popular gifs of your favorite superhero and get all the related
+        superhero movie information</div>
     </div>
 
-    <!-- Button List -->
-    <div id="buttons-view"></div>
+    <!-- Inputer Container -->
+    <div class="user-container">
+      <!-- Messages to user -->
+      <div class="user-message"></div>
+      <!-- Add a Superhero Form -->
+      <!-- validateForm function not working -->
+      <form id="superhero-form" name="superheroForm">
+        <label for="superhero-input" class="superhero-input-label">Add a superhero</label>
+        <input type="text" id="superhero-input">
+        <input type="submit" id="add-superhero">
+      </form>
 
-    <!-- Add a Superhero Form -->
-    <!-- validateForm function not working -->
-    <form id="superhero-form" name="superheroForm" onsubmit="return validateForm()">
-      <label for="superhero-input">Add a Superhero</label>
-      <input type="text" id="superhero-input">
-      <input type="submit" id="add-superhero">
-    </form>
+      <!-- Button List -->
+      <div id="buttons-view"></div>
+    </div>
 
-    <!-- Addional Gifs Button -->
-    <button id="add-gifs">Add more gifs(hide)</button>
-    <!-- Response -->
-    <div class="response-container">
+    <!-- Superhoero container -->
+    <div class="superhero-container">
       <!-- Superhero name -->
       <div class="superhero-name"></div>
+      <!-- Addional Gifs Button -->
+      <button id="add-gifs">Add more gifs</button>
+    </div>
+
+    <!-- Response -->
+    <div class="response-container">
       <div class="superhero-movie-button"></div>
       <!-- Superhero Movie List -->
       <div id="movie-container">
@@ -49,7 +56,7 @@
       </div>
 
       <!-- Bootstrap Grid Markup -->
-      <div class="row"></div>
+      <div class="row justify-content-center"></div>
 
     </div>
     <!-- jQuery -->
