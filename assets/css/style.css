@@ -9,6 +9,7 @@
 
 .header-container {
   text-align: center;
+  padding: 20px 8px !important;
 }
 
 .jumbotron {
