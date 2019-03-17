@@ -106,6 +106,7 @@ $(document).ready(function () {
       for (let i = 0; i < queryLimit; i++) {
         parseResponse(i);
       };
+
       // Add superhero name above gifs and button to display movies related to the superhero
       let superheroTitle = $("<h2>").text(`Superhero: ${searchTerm}`)
       superheroTitle.addClass("superhero-title")
@@ -116,7 +117,9 @@ $(document).ready(function () {
       $(superheroMovieButton).text(`See movies related to ${searchTerm}`)
 
       $(".superhero-movie-button").append(superheroMovieButton);
+
     });
+
   };
 
   // ajax call - get movie information based on superhero name
@@ -219,7 +222,7 @@ $(document).ready(function () {
     // Scroll to gifs images
     $("html, body").animate({
       scrollTop: $(".superhero-container").offset().top
-    }, "slow");
+    }, 1000);
   });
 
   // On-click event when gif image is clicked (store in state variable)
@@ -239,7 +242,7 @@ $(document).ready(function () {
 
   // on-click event - add more gifs
   $("#add-gifs").on("click", function () {
-    event.preventDefault();
+
     queryLimit += 10;
     // Clear previous image data
     $(".superhero-name").empty();
@@ -247,9 +250,11 @@ $(document).ready(function () {
     console.log("add gifs button", queryLimit);
     // Empty 'response-image' div - replace with new limit
     $(".row").empty();
+
     // Build URL and make ajax call;
     let queryURL = `https://api.giphy.com/v1/gifs/search?api_key=g5t8rzBmA7CyL8n5km5vhPjOEfUXops4&q=${searchTerm}&limit=${queryLimit}&offset=0&lang=en`;
     ajaxCall(queryURL);
+
   });
 
   // on-click event - clear all gifs and movie detail
