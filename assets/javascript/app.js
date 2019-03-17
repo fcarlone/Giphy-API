@@ -1,5 +1,5 @@
 // Global variables
-let topics = ["batman", "thor", "captain america", "hulk", "wonder woman", "rocket raccoon", "flash", "Starfire", "ant-man", "daredevel", "she-hulk", "luke cage", "wolverine"];
+let topics = ["batman", "thor", "captain america", "hulk", "wonder woman", "rocket raccoon", "flash", "starfire", "ant-man", "daredevel", "she-hulk", "luke cage", "wolverine"];
 let superheroName = '';
 // let apiKey = 'g5t8rzBmA7CyL8n5km5vhPjOEfUXops4';
 let queryLimit = 10;
@@ -238,7 +238,7 @@ $(document).ready(function () {
   });
 
   // on-click event - add more gifs
-  $(document).on("click", "#add-gifs", function () {
+  $("#add-gifs").on("click", function () {
     event.preventDefault();
     queryLimit += 10;
     // Clear previous image data
