@@ -15,6 +15,9 @@ body {
 .header-container {
   text-align: center;
   padding: 20px 8px !important;
+  background-color: #557A95 !important;
+  /* background-color: #7395AE !important; */
+  color: rgb(245, 240, 240) !important;
 }
 
 .jumbotron {
@@ -96,7 +99,7 @@ body {
 }
 
 .superhero:focus {
-  background: red;
+  background: rgb(165, 52, 18);
   outline: none;
 }
 
@@ -112,7 +115,6 @@ body {
 }
 
 .row {
-  /* center cards */
   display: inline;
   margin: 0;
 }
