@@ -1,5 +1,5 @@
 // Global variables
-let topics = ["batman", "thor", "captain america", "hulk"];
+let topics = ["batman", "thor", "captain america", "hulk", "wonder woman", "rocket raccoon", "flash", "Starfire", "ant-man", "daredevel", "she-hulk", "luke cage", "wolverine"];
 let superheroName = '';
 // let apiKey = 'g5t8rzBmA7CyL8n5km5vhPjOEfUXops4';
 let queryLimit = 10;
@@ -153,6 +153,8 @@ $(document).ready(function () {
         let movieOverviewTag = $("<p>").html(`<strong>Plot: </strong>${movieOverview}`);
         let movieReleaseDateTag = $("<p>").html(`<strong>Release Date: </strong>${convertedMovieDate}`);
         let moviePosterTag = $("<img>").attr("src", moviePosterPath);
+        // add alternate text
+        moviePosterTag.attr("alt", "image not available");
 
 
         $(movieDiv).append(movieTitleTag);
@@ -213,6 +215,11 @@ $(document).ready(function () {
     let queryURL = `https://api.giphy.com/v1/gifs/search?api_key=g5t8rzBmA7CyL8n5km5vhPjOEfUXops4&q=${searchTerm}&limit=${queryLimit}&offset=0&lang=en`;
     // API GET request
     ajaxCall(queryURL);
+
+    // Scroll to gifs images
+    $("html, body").animate({
+      scrollTop: $(".superhero-container").offset().top
+    }, "slow");
   });
 
   // On-click event when gif image is clicked (store in state variable)

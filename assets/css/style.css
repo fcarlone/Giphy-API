@@ -2,6 +2,10 @@
 
 /* https://www.toptal.com/designers/subtlepatterns/ */
 
+body {
+  background: url('../images/binding_light.png');
+}
+
 .app-content {
   margin-left: 50px;
   margin-right: 50px;
@@ -15,8 +19,8 @@
 .jumbotron {
   margin-top: 10px;
   margin-bottom: 10px;
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 100px;
+  margin-right: 100px;
 }
 
 .user-container,
@@ -60,6 +64,7 @@
   border-radius: 4px;
   margin-left: 5px;
   font-size: 1.25rem;
+  margin-bottom: .5rem;
 }
 
 #add-superhero:focus,
@@ -68,6 +73,25 @@
 #superhero-input,
 #clear-all {
   outline: none;
+}
+
+.superhero,
+#add-gifs,
+.add-movie,
+#clear-all,
+#add-superhero {
+  background-color: rgba(9, 146, 112, 0.822);
+  color: white;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.superhero:hover,
+#add-gifs:hover,
+.add-movie:hover,
+#clear-all:hover,
+#add-superhero:hover {
+  background-color: rgb(3, 96, 158);
 }
 
 .superhero:focus {
