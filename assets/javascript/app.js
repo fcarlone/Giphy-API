@@ -136,45 +136,54 @@ $(document).ready(function () {
       method: "GET"
     }).then(function (response) {
       console.log('movie response', response)
+      if (response.total_results === 0) {
+        console.log('movie response total_results', response.total_results)
 
-      // Get movie data
-      function movieResults(i) {
-        let movieTitle = response.results[i].title;
-        // let movieRating = response.results[i].rating;
-        let movieOverview = response.results[i].overview;
-        let movieReleaseDate = response.results[i].release_date;
-        let date = new Date(movieReleaseDate)
-        let options = { year: 'numeric', month: 'long', day: 'numeric' };
-        let convertedMovieDate = (date.toLocaleDateString("en-US", options))
-        let moviePosterPath = `https://image.tmdb.org/t/p/original${response.results[i].poster_path}`;
+        // Scroll to top
+        $("html, body").animate({
+          scrollTop: $("body").offset().top
+        }, 1000);
+        $(".user-message").text(`No movies exists for ${superhero}`)
 
-        console.log('movieTitle', movieTitle)
-        // console.log('movieRating', movieRating)
-        console.log('movieRelease', convertedMovieDate)
-        console.log('movieOverview', movieOverview)
-        console.log('moviePoster', moviePosterPath);
+      } else {
+        // Get movie data
+        function movieResults(i) {
+          let movieTitle = response.results[i].title;
+          // let movieRating = response.results[i].rating;
+          let movieOverview = response.results[i].overview;
+          let movieReleaseDate = response.results[i].release_date;
+          let date = new Date(movieReleaseDate)
+          let options = { year: 'numeric', month: 'long', day: 'numeric' };
+          let convertedMovieDate = (date.toLocaleDateString("en-US", options))
+          let moviePosterPath = `https://image.tmdb.org/t/p/original${response.results[i].poster_path}`;
 
-        // Display 5 movies 
-        let movieDiv = $("<div>").addClass("movie")
+          console.log('movieTitle', movieTitle)
+          // console.log('movieRating', movieRating)
+          console.log('movieRelease', convertedMovieDate)
+          console.log('movieOverview', movieOverview)
+          console.log('moviePoster', moviePosterPath);
 
-        let movieTitleTag = $("<p>").html(`<strong>Movie Title: </strong>${movieTitle}`);
-        let movieOverviewTag = $("<p>").html(`<strong>Plot: </strong>${movieOverview}`);
-        let movieReleaseDateTag = $("<p>").html(`<strong>Release Date: </strong>${convertedMovieDate}`);
-        let moviePosterTag = $("<img>").attr("src", moviePosterPath);
-        // add alternate text
-        moviePosterTag.attr("alt", "image not available");
+          // Display 5 movies 
+          let movieDiv = $("<div>").addClass("movie")
 
+          let movieTitleTag = $("<p>").html(`<strong>Movie Title: </strong>${movieTitle}`);
+          let movieOverviewTag = $("<p>").html(`<strong>Plot: </strong>${movieOverview}`);
+          let movieReleaseDateTag = $("<p>").html(`<strong>Release Date: </strong>${convertedMovieDate}`);
+          let moviePosterTag = $("<img>").attr("src", moviePosterPath);
+          // add alternate text
+          moviePosterTag.attr("alt", "image not available");
 
-        $(movieDiv).append(movieTitleTag);
-        $(movieDiv).append(movieOverviewTag);
-        $(movieDiv).append(movieReleaseDateTag);
-        $(movieDiv).append(moviePosterTag);
+          $(movieDiv).append(movieTitleTag);
+          $(movieDiv).append(movieOverviewTag);
+          $(movieDiv).append(movieReleaseDateTag);
+          $(movieDiv).append(moviePosterTag);
 
-        $(".movies").append(movieDiv);
+          $(".movies").append(movieDiv);
 
-      }
-      for (let i = 0; i <= 4; i++) {
-        movieResults(i);
+        }
+        for (let i = 0; i <= 4; i++) {
+          movieResults(i);
+        }
       }
     });
   }
@@ -271,9 +280,6 @@ $(document).ready(function () {
     // Build URL and make ajax call to Giphy API
     let queryURL = `https://api.giphy.com/v1/gifs/search?api_key=g5t8rzBmA7CyL8n5km5vhPjOEfUXops4&q=${searchTerm}&limit=${queryLimit}&offset=0&lang=en`;
     ajaxCall(queryURL);
-
-
-
   });
 
   // on-click event - clear all gifs and movie detail
