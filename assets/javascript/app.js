@@ -86,15 +86,21 @@ $(document).ready(function () {
         cardTextRating.addClass("card-text")
         let cardImportDate = $("<p>").html(`<strong>Import Date:</strong> ${convertedImportDate}`);
         cardImportDate.addClass("card-text")
+        let cardFavorite = $("<p>").html(`<strong>Add to favorites: </strong><i class='fav-heart far fa-heart'> </i>`);
+        cardFavorite.attr("fav-state", "gif-unfav")
+        cardFavorite.addClass("card-text fav-button")
+
 
         let appendOne = $(cardBody).append(cardText);
         let appendTwo = $(cardBody).append(cardTextRating);
         let appendThree = $(cardBody).append(cardImportDate);
+        let appendFour = $(cardBody).append(cardFavorite);
 
         $(card).append(imageTag);
         $(card).append(appendOne);
         $(card).append(appendTwo);
         $(card).append(appendThree);
+        $(card).append(appendFour);
 
         $(".row").append(card);
 
@@ -121,7 +127,7 @@ $(document).ready(function () {
         $("html, body").animate({
           scrollTop: $("body").offset().top
         }, 1000);
-        $(".user-message").text(`No movies exist for ${superhero}`)
+        $(".user-message").text(`No movies exists for ${superhero}`)
 
       } else {
         // Get movie data
@@ -252,6 +258,8 @@ $(document).ready(function () {
 
   // on-click event - clear all gifs and movie detail
   $("#clear-all").on("click", function () {
+    // hide favorites
+    $(".favorite-list").hide();
     // hide response-container
     $(".response-container").hide();
     // hide superhero-container
@@ -264,6 +272,71 @@ $(document).ready(function () {
     // Invoke ajaxMovieRequest function
     ajaxMovieRequest(searchTerm);
   });
+
+  // on-click event - add favorites
+  $(document).on("click", ".fav-heart", function () {
+    // toggle favs icon
+    $(this).toggleClass("far fa-heart fas fa-heart");
+
+    let favState = $(this).parent().attr("fav-state");
+
+    if (favState === "gif-unfav") {
+
+      let gifCardFav = $(this).parent().parent().parent()[0];
+
+      console.log('this', this)
+      console.log(gifCardFav)
+      let getGif = gifCardFav.innerHTML;
+      // Get animate http URL
+      let favGif = $(getGif).attr("data-animate");
+      console.log('favGif', favGif)
+      // Add favorite gif to favGifs array
+      favGifs.push(favGif);
+      // Save the todos into localstorage.
+      localStorage.setItem("favlist", JSON.stringify(favGifs));
+      // Change gif fav-state fromm gif-unfav to gif-fav
+      $(this).attr("fav-state", "gif-fav")
+
+      console.log(favGifs)
+    };
+
+  });
+
+  // on-click event - show list of favorite gifs
+  $(document).on("click", "#button-favorites", function (event) {
+    event.preventDefault();
+    $(".favorite-list").empty();
+
+    console.log('buttons favorite clicked', favGifs)
+    // 
+    // create list of favorite gifs
+    const favGifsList = (i) => {
+      console.log(favGifs[i]);
+      let favTextTag = $("<p>").text(`Favorite no. ${i + 1}: `)
+      let favTag = $("<a>")
+      favTextTag.attr("data-fav", i);
+      favTag.attr("target", "_blank")
+      favTag.attr("href", favGifs[i]);
+      favTag.addClass("fav");
+      favTag.text(favGifs[i])
+
+      $(favTextTag).append(favTag)
+
+      $(".favorite-list").append(favTextTag)
+    }
+    for (let i = 0; i < favGifs.length; i++) {
+      favGifsList(i)
+    };
+  });
+
+  // Load the favGifs from localstorage.
+  let favGifs = JSON.parse(localStorage.getItem("favlist"))
+  console.log('localStorage favlist', favGifs)
+  // Check if favGifs array already exists in localStorage - if not create it
+  if (!Array.isArray(favGifs)) {
+    favGifs = [];
+  }
+
   // Invoke createButtons function
   createButtons();
 });
