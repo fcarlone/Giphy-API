@@ -13,11 +13,16 @@ body {
 }
 
 .header-container {
+  font-family: 'Raleway', sans-serif;
   text-align: center;
   padding: 20px 8px !important;
   background-color: #557A95 !important;
   /* background-color: #7395AE !important; */
   color: rgb(245, 240, 240) !important;
+}
+
+.header-title {
+  font-family: 'Roboto', sans-serif;
 }
 
 .jumbotron {
@@ -32,6 +37,7 @@ body {
 .response-container {
   margin-left: 100px;
   margin-right: 100px;
+  font-family: 'Barlow', sans-serif;
 }
 
 .user-message {
@@ -131,10 +137,12 @@ body {
 }
 
 .card-text {
+  font-family: 'Roboto', sans-serif;
   margin-bottom: 7px;
 }
 
 #movie-container {
+  font-family: 'Heebo', sans-serif;
   margin-left: 50px;
   margin-right: 50px;
 }
