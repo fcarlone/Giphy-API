@@ -1,10 +1,8 @@
 // Global variables
 let topics = ["batman", "thor", "captain america", "hulk", "wonder woman", "rocket raccoon", "flash", "starfire", "ant-man", "daredevel", "she-hulk", "luke cage", "wolverine"];
 let superheroName = '';
-// let apiKey = 'g5t8rzBmA7CyL8n5km5vhPjOEfUXops4';
 let queryLimit = 10;
-// let queryURL = `https://api.giphy.com/v1/gifs/search?api_key=g5t8rzBmA7CyL8n5km5vhPjOEfUXops4&q=${searchTerm}&limit=${queryLimit}&offset=0&lang=en`;
-// let themoviedb example = http://api.themoviedb.org/3/search/movie?api_key=bbaefc5cfba8d768b17fb5ce96e4a7f2&query=thor;
+
 // jQuery
 $(document).ready(function () {
 
@@ -111,20 +109,7 @@ $(document).ready(function () {
       for (let i = 0; i < queryLimit; i++) {
         parseResponse(i);
       };
-
-      // Add superhero name above gifs and button to display movies related to the superhero
-      // let superheroTitle = $("<h2>").text(`Superhero: ${searchTerm}`)
-      // superheroTitle.addClass("superhero-title")
-      // $(".superhero-name").append(superheroTitle)
-
-      // let superheroMovieButton = $("<button>");
-      // superheroMovieButton.addClass("add-movie");
-      // $(superheroMovieButton).text(`See movies related to ${searchTerm}`)
-
-      // $(".superhero-movie-button").append(superheroMovieButton);
-
     });
-
   };
 
   // Ajax call to movie API - get movie information based on superhero name
@@ -143,7 +128,7 @@ $(document).ready(function () {
         $("html, body").animate({
           scrollTop: $("body").offset().top
         }, 1000);
-        $(".user-message").text(`No movies exists for ${superhero}`)
+        $(".user-message").text(`No movies exist for ${superhero}`)
 
       } else {
         // Get movie data
@@ -158,7 +143,6 @@ $(document).ready(function () {
           let moviePosterPath = `https://image.tmdb.org/t/p/original${response.results[i].poster_path}`;
 
           console.log('movieTitle', movieTitle)
-          // console.log('movieRating', movieRating)
           console.log('movieRelease', convertedMovieDate)
           console.log('movieOverview', movieOverview)
           console.log('moviePoster', moviePosterPath);
@@ -299,7 +283,6 @@ $(document).ready(function () {
   })
 
   // Invoke createButtons function
-  // validateForm();
   createButtons();
 });
 
