@@ -34,11 +34,16 @@ $(document).ready(function () {
 
   // Ajax call to Giphy API
   const ajaxCall = (queryURL) => {
+    // show hidden divs
+    $(".superhero-name").show();
+    $(".superhero-movie-button").show();
+    $(".row").show();
     console.log('queryURL', queryURL);
     $.ajax({
       url: queryURL,
       method: "GET"
     }).then(function (response) {
+
       console.log(response)
       // *** Parse response JSON function ***
       function parseResponse(i) {
@@ -108,21 +113,21 @@ $(document).ready(function () {
       };
 
       // Add superhero name above gifs and button to display movies related to the superhero
-      let superheroTitle = $("<h2>").text(`Superhero: ${searchTerm}`)
-      superheroTitle.addClass("superhero-title")
-      $(".superhero-name").append(superheroTitle)
+      // let superheroTitle = $("<h2>").text(`Superhero: ${searchTerm}`)
+      // superheroTitle.addClass("superhero-title")
+      // $(".superhero-name").append(superheroTitle)
 
-      let superheroMovieButton = $("<button>");
-      superheroMovieButton.addClass("add-movie");
-      $(superheroMovieButton).text(`See movies related to ${searchTerm}`)
+      // let superheroMovieButton = $("<button>");
+      // superheroMovieButton.addClass("add-movie");
+      // $(superheroMovieButton).text(`See movies related to ${searchTerm}`)
 
-      $(".superhero-movie-button").append(superheroMovieButton);
+      // $(".superhero-movie-button").append(superheroMovieButton);
 
     });
 
   };
 
-  // ajax call - get movie information based on superhero name
+  // Ajax call to movie API - get movie information based on superhero name
   const ajaxMovieRequest = (superhero) => {
     let movieQueryURL = `http://api.themoviedb.org/3/search/movie?api_key=bbaefc5cfba8d768b17fb5ce96e4a7f2&query=${superhero}`;
     console.log('the ajaxMovieRequest function', superhero)
@@ -223,6 +228,17 @@ $(document).ready(function () {
     $("html, body").animate({
       scrollTop: $(".superhero-container").offset().top
     }, 1000);
+
+    // Add superhero name above gifs and button to display movies related to the superhero
+    let superheroTitle = $("<h2>").text(`Superhero: ${searchTerm}`)
+    superheroTitle.addClass("superhero-title")
+    $(".superhero-name").append(superheroTitle)
+
+    let superheroMovieButton = $("<button>");
+    superheroMovieButton.addClass("add-movie");
+    $(superheroMovieButton).text(`See movies related to ${searchTerm}`)
+
+    $(".superhero-movie-button").append(superheroMovieButton);
   });
 
   // On-click event when gif image is clicked (store in state variable)
@@ -241,19 +257,22 @@ $(document).ready(function () {
   });
 
   // on-click event - add more gifs
-  $("#add-gifs").on("click", function () {
-
+  $("#add-gifs").on("click", function (event) {
+    event.preventDefault()
     queryLimit += 10;
+
     // Clear previous image data
-    $(".superhero-name").empty();
-    $(".superhero-movie-button").empty();
+    $(".superhero-name").hide();
+    $(".superhero-movie-button").hide();
     console.log("add gifs button", queryLimit);
     // Empty 'response-image' div - replace with new limit
-    $(".row").empty();
+    $(".row").hide();
 
-    // Build URL and make ajax call;
+    // Build URL and make ajax call to Giphy API
     let queryURL = `https://api.giphy.com/v1/gifs/search?api_key=g5t8rzBmA7CyL8n5km5vhPjOEfUXops4&q=${searchTerm}&limit=${queryLimit}&offset=0&lang=en`;
     ajaxCall(queryURL);
+
+
 
   });
 
