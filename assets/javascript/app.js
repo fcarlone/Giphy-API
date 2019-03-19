@@ -91,7 +91,6 @@ $(document).ready(function () {
         cardFavorite.attr("fav-state", "gif-unfav")
         cardFavorite.addClass("card-text fav-button")
 
-
         let appendOne = $(cardBody).append(cardText);
         let appendTwo = $(cardBody).append(cardTextRating);
         let appendThree = $(cardBody).append(cardImportDate);
@@ -285,14 +284,26 @@ $(document).ready(function () {
       // Get animate http URL
       let favGif = $(getGif).attr("data-animate");
       // Add favorite gif to favGifs array
-      favGifs.push(favGif);
+      // Check if gif already saved to favoirtes
+      if (favGifs.includes(favGif)) {
+        // Scroll to top - tell user gif is already marked as favorite
+        $("html, body").animate({
+          scrollTop: $("body").offset().top
+        }, 1000);
+        // Tell user gif already marked as favorite
+        $(".user-message").text("Gif already saved to your favorites");
+      } else {
+        favGifs.push(favGif);
+      };
       // Save the todos into localstorage.
       localStorage.setItem("favlist", JSON.stringify(favGifs));
       // Change gif fav-state fromm gif-unfav to gif-fav
-      $(this).attr("fav-state", "gif-fav")
+      $(this).parent().attr("fav-state", "gif-fav")
       // Update list
       $(".favorite-list").empty();
       renderFavGifsList(favGifs);
+    } if (favState === "gif-fav") {
+      $(this).parent().attr("fav-state", "gif-unfav")
     };
   });
 
@@ -364,12 +375,12 @@ $(document).ready(function () {
     localStorage.setItem("favlist", JSON.stringify(favGifs));
   })
 
-  // Load the favGifs from localstorage.
+  // Load the favGifs from localstorage
   let favGifs = JSON.parse(localStorage.getItem("favlist"))
   // Check if favGifs array already exists in localStorage - if not create it
   if (!Array.isArray(favGifs)) {
     favGifs = [];
-  }
+  };
 
   // Invoke createButtons function
   createButtons();
