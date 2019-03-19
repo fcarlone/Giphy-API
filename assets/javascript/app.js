@@ -117,7 +117,7 @@ $(document).ready(function () {
 
   // Ajax call to movie API - get movie information based on superhero name
   const ajaxMovieRequest = (superhero) => {
-    let movieQueryURL = `http://api.themoviedb.org/3/search/movie?api_key=bbaefc5cfba8d768b17fb5ce96e4a7f2&query=${superhero}`;
+    let movieQueryURL = `https://api.themoviedb.org/3/search/movie?api_key=bbaefc5cfba8d768b17fb5ce96e4a7f2&query=${superhero}`;
     $.ajax({
       url: movieQueryURL,
       method: "GET"
