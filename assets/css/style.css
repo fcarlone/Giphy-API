@@ -17,7 +17,6 @@ body {
   text-align: center;
   padding: 20px 8px !important;
   background-color: #557A95 !important;
-  /* background-color: #7395AE !important; */
   color: rgb(245, 240, 240) !important;
 }
 
@@ -66,7 +65,9 @@ body {
 #add-superhero,
 #add-gifs,
 .add-movie,
-#clear-all {
+#clear-all,
+#button-favorites,
+.close-favs {
   border-radius: 4px;
   font-size: 1.25rem;
   margin-bottom: 10px;
@@ -76,7 +77,8 @@ body {
   margin-bottom: 10px;
 }
 
-.superhero {
+.superhero,
+#button-favorites {
   border-radius: 4px;
   margin-left: 5px;
   font-size: 1.25rem;
@@ -87,7 +89,8 @@ body {
 #add-gifs:focus,
 .add-movie:focus,
 #superhero-input,
-#clear-all {
+#clear-all,
+#button-favorites {
   outline: none;
 }
 
@@ -95,7 +98,10 @@ body {
 #add-gifs,
 .add-movie,
 #clear-all,
-#add-superhero {
+#add-superhero,
+#button-favorites,
+.checkbox,
+.close-favs {
   background-color: rgba(9, 146, 112, 0.822);
   color: white;
   padding-left: 15px;
@@ -106,7 +112,9 @@ body {
 #add-gifs:hover,
 .add-movie:hover,
 #clear-all:hover,
-#add-superhero:hover {
+#add-superhero:hover,
+#button-favorites:hover,
+.close-favs:hover {
   background-color: rgb(3, 96, 158);
 }
 
@@ -164,4 +172,19 @@ body {
 .fas {
   font-size: 17px;
   color: red;
+}
+
+.favorite-list {
+  font-family: 'Heebo', sans-serif;
+  background-color: white;
+  border: 2px solid rgb(102, 98, 98);
+  padding: 15px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.fav-header,
+.fav-message {
+  font-size: 1.5rem;
+  margin-bottom: 0;
 }

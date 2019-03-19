@@ -10,6 +10,7 @@ $(document).ready(function () {
   $(".user-message").text("Select or add a superhero");
   $("#add-gifs").hide();
   $("#clear-all").hide();
+  $(".favorite-list").hide();
 
   // Create buttons for superheroes in 'topics' array
   const createButtons = () => {
@@ -277,61 +278,94 @@ $(document).ready(function () {
   $(document).on("click", ".fav-heart", function () {
     // toggle favs icon
     $(this).toggleClass("far fa-heart fas fa-heart");
-
     let favState = $(this).parent().attr("fav-state");
-
     if (favState === "gif-unfav") {
-
       let gifCardFav = $(this).parent().parent().parent()[0];
-
-      console.log('this', this)
-      console.log(gifCardFav)
       let getGif = gifCardFav.innerHTML;
       // Get animate http URL
       let favGif = $(getGif).attr("data-animate");
-      console.log('favGif', favGif)
       // Add favorite gif to favGifs array
       favGifs.push(favGif);
       // Save the todos into localstorage.
       localStorage.setItem("favlist", JSON.stringify(favGifs));
       // Change gif fav-state fromm gif-unfav to gif-fav
       $(this).attr("fav-state", "gif-fav")
-
-      console.log(favGifs)
+      // Update list
+      $(".favorite-list").empty();
+      renderFavGifsList(favGifs);
     };
-
   });
 
   // on-click event - show list of favorite gifs
   $(document).on("click", "#button-favorites", function (event) {
     event.preventDefault();
     $(".favorite-list").empty();
-
-    console.log('buttons favorite clicked', favGifs)
-    // 
-    // create list of favorite gifs
-    const favGifsList = (i) => {
-      console.log(favGifs[i]);
-      let favTextTag = $("<p>").text(`Favorite no. ${i + 1}: `)
-      let favTag = $("<a>")
-      favTextTag.attr("data-fav", i);
-      favTag.attr("target", "_blank")
-      favTag.attr("href", favGifs[i]);
-      favTag.addClass("fav");
-      favTag.text(favGifs[i])
-
-      $(favTextTag).append(favTag)
-
-      $(".favorite-list").append(favTextTag)
-    }
-    for (let i = 0; i < favGifs.length; i++) {
-      favGifsList(i)
-    };
+    renderFavGifsList(favGifs);
   });
+
+  const renderFavGifsList = (favGifs) => {
+    $(".favorite-list").show();
+
+    if (favGifs.length !== 0) {
+
+      for (let i = 0; i < favGifs.length; i++) {
+        // Create Delete Button to remove favorite gifs
+        let favRemove = $("<button>");
+        favRemove.attr("data-fav-gif", i);
+        favRemove.addClass("checkbox");
+        favRemove.text("X")
+
+        let favTextTag = $("<p>").text(` Favorite no. ${i + 1}: `);
+        let favTag = $("<a>");
+
+        favTag.attr("target", "_blank");
+        favTag.attr("href", favGifs[i]);
+        favTag.text(favGifs[i]);
+
+        $(favTextTag).prepend(favRemove);
+        $(favTextTag).append(favTag);
+
+        $(".favorite-list").append(favTextTag);
+      }
+      let favHeader = $("<p>").text(`Click on the "X" to remove favorite gif`)
+      favHeader.addClass("fav-header")
+      let closeFavs = $("<button>")
+      closeFavs.text("Close favorite gifs window");
+      closeFavs.addClass("close-favs")
+      $(".favorite-list").prepend(closeFavs);
+      $(".favorite-list").prepend(favHeader);
+    } else {
+      let favMessage = $("<p>").text("You currently do not have any favorite gifs stored")
+      favMessage.addClass("fav-message")
+      $(".favorite-list").prepend(favMessage);
+      let closeFavs = $("<button>")
+      closeFavs.text("Close favorite gifs window");
+      closeFavs.addClass("close-favs")
+      $(".favorite-list").prepend(closeFavs);
+    }
+  };
+
+  // on-click - close favorites window 
+  $(document).on("click", ".close-favs", function () {
+    $(".favorite-list").hide(1000)
+  });
+
+  // Delete favorite gifs from favorite list
+  $(document).on("click", ".checkbox", function (event) {
+    event.preventDefault();
+    $(".favorite-list").empty();
+    // Get the data attribute ("data-fav-gif") number of the selected gif
+    let favNumber = $(this).attr("data-fav-gif");
+    // Delete the item for the favGifs array
+    favGifs.splice(favNumber, 1);
+    // Update the fav gifs list
+    renderFavGifsList(favGifs);
+    // Save to localStorage
+    localStorage.setItem("favlist", JSON.stringify(favGifs));
+  })
 
   // Load the favGifs from localstorage.
   let favGifs = JSON.parse(localStorage.getItem("favlist"))
-  console.log('localStorage favlist', favGifs)
   // Check if favGifs array already exists in localStorage - if not create it
   if (!Array.isArray(favGifs)) {
     favGifs = [];
